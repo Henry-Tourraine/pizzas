@@ -1,0 +1,495 @@
+
+    <%-include('banner')%>
+    <style>.banner{width: 100mw;}</style>
+<div class="fond">  
+<% var i = 0%>
+
+<% pizzas.pizzas.forEach(function(pizza){%>
+    <div class="mySlides fade">
+    <div class="pi <%=i%>">
+    <h3 class="name"><%=pizza.name%></h3>
+    <img width="400px" height="auto" src="<%=pizza.image%>">
+    <h5>Composition:</h5>
+    <%if(pizza.composition.split('/').length >3){%>
+    <h4><%=pizza.composition.split('/').slice(0, 3).toString().split(',').join(', ')%></h4>
+    <%if(pizza.composition.split('/').slice(3, pizza.composition.split('/').length >3)){%>
+    <h4><%=pizza.composition.split('/').slice(3, 6).toString().split(',').join(', ')%></h4>
+    <h4><%=pizza.composition.split('/').slice(6, pizza.composition.split('/').length).toString().split(',').join(', ')%></h4>
+    <%}%>
+    <%}%>
+    <%if(pizza.composition.split('/').length <= 3){%>
+        <h4><%=pizza.composition.split('/').join(', ')%></h4>
+        <%}%>
+    <h5>Prix:</h5>
+    <h4 class="price"><%=pizza.price%>€</h4>
+    <button class="addButton <%=i%>" type="button">Ajouter</button>
+    </div>
+    <% i++%>
+</div>
+<%})%>
+<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+<a class="next" onclick="plusSlides(1)">&#10095;</a> 
+</div>
+<div class="menu">
+<select name="transport">
+    <option value="restaurant">Retirer au restaurant</option>
+    <option value="delivery">Se faire livrer</option>
+</select>
+<div class="information"></div>
+<label>Je reconnais avoir pris connaissance de ces conditions et confirme que mon adresse de livraison se trouve dans les zones citées</label>
+<input type="checkbox" name="aknowledge">
+<div class="cartRow">
+</div>
+<label>TOTAL :</label>   
+<div class="total">0€</div>
+<button class="purchase">COMMANDER</button>
+</div>
+<hr>
+<div class="pack">
+<div class="condition">
+    <h2><u>Conditions de vente</u></h2>
+    <h2>Livraison</h2>
+    <h4>La livraison n'est possible à Bordeaux que dans les zones de Bordeaux Centre, St Augustin, Nansouty, Bordeaux Sud(St Jean), Chartrons et Bastide<br> 
+    Vous vous engagez après réception de votre commande à la confirmer par l'envoi d'un sms au 06 06 06 06
+    </h4>
+    <h2>Remboursement</h2>
+    <h4>Aucun remboursement n'est prévu pour l'option à emporter<br>Les cas où vous pourrez être remboursés sont les suivants :<br>
+    Votre commande n'a pas été livrée une heure après qu'elle a été préparée<br>
+    Votre commande est arrivée endommagée</h4>
+    <h2>Délai</h2>
+    <h4>Le temps de préparation est d'environ 20 minutes mais peut varier selon l'affluence<br>
+    Vous pouvez téléphoner au 05 56 81 55 02 pour avoir une estimation précise le jour même de votre commande</h4>
+    </div>
+
+<script>
+      var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  
+  slides[slideIndex-1].style.display = "block";  
+}
+</script>
+
+    <%-include('footer') %> 
+
+</div>    
+<script defer>
+    if(document.readyState == 'loading'){
+        document.addEventListener('DOMContentLoaded', start)
+    }else{start()}
+
+    function start(){ 
+        //SLIDESHOW
+      
+        
+
+    //TRANSPORT
+    var transport = document.getElementsByName("transport")[0].value
+    document.getElementsByName("transport")[0].addEventListener('change', updateTransport)
+   dispInfo()
+    
+    function updateTransport(event){
+        document.getElementsByClassName("info")[0].remove()
+        updateTotal()
+        dispInfo()
+        transport = event.target.value
+        console.log(transport)
+    }
+    //PURCHASE  
+    var purchase = document.getElementsByClassName("purchase")[0].addEventListener('click', purchased) 
+    
+  
+    //REMOVE BUTTON
+    var removeButtons = document.getElementsByClassName("remove");
+    for(i=0; i<removeButtons.length; i++){
+        var button = removeButtons[i];
+        button.addEventListener('click', removeItem)
+    }
+    function removeItem(event){
+            var buttonSe = event.target
+            buttonSe.parentElement.parentElement.remove()
+            updateTotal()}
+    //QUANTITY
+    var quantityInput = document.getElementsByClassName("item-quantity")
+    for(i=0; i<quantityInput.length; i++){
+        var input = quantityInput[i].getElementByTagName("input")[0];
+        input.addEventListener('change', quantityChange)
+    }    
+   function quantityChange(event){
+       var inpu = event.target
+       if(isNaN(inpu.value) || inpu.value <= 0){
+           inpu.value = 1
+        }
+           updateTotal()
+       
+   }
+    //UPDATE CART TOTAL
+    function updateTotal(){
+        priceItem = document.getElementsByClassName("item-price");
+        quantityItem = document.getElementsByClassName("item-quantity");
+        if(quantityItem.length != 0 && priceItem.length == quantityItem.length){
+        console.log(quantityItem);
+        var total =0;
+        for(o=0; o<priceItem.length; o++){
+            price = priceItem[o].innerText.replace('€', '')
+            price = parseFloat(price)
+            quantity = quantityItem[o].getElementsByTagName("input")[0].value
+            quantity = parseInt(quantity)
+            total += quantity*price
+            if(document.getElementsByName("transport")[0].value == "delivery"){total += 2.5}
+            total = Math.round(total*1000)/1000
+        }
+        }else if(document.getElementsByName("transport")[0].value == "delivery"){total = 2.5}
+        else{total = 0}
+    document.getElementsByClassName("total")[0].innerText = total+"€"
+    console.log(total)
+}
+
+    //ADD BUTTON
+    total = document.getElementsByClassName('addButton');
+    console.log(total)
+   
+
+    var addToCartButtons = document.getElementsByClassName("addButton")
+    for(var i=0; i<addToCartButtons.length; i++){
+        var button = addToCartButtons[i];
+        button.addEventListener('click', addToCart) 
+    }
+    function addToCart(event){
+        var button = event.target;
+        var parent = button.parentElement
+        title = parent.getElementsByClassName("name")[0].innerHTML;
+        price = parent.getElementsByClassName("price")[0].innerHTML;
+        image = parent.getElementsByTagName("img")[0].src;
+        addItemToCart(title, image, price)
+        console.log(title, price)
+        updateTotal()
+
+    }
+    function addItemToCart(title, image, price){
+        row = document.createElement('div')
+        row.classList.add("row")
+        //cartItemName = document.getElementByClassName("global-item")
+        cartRow = document.getElementsByClassName("cartRow")[0]
+        cartItemNames = cartRow.getElementsByClassName("title-item")
+        for(i=0; i<cartItemNames.length; i++){
+            if(cartItemNames[i].innerText == title){
+                cartVal = cartItemNames[i].parentElement.parentElement.getElementsByClassName("item-quantity")[0].getElementsByTagName("input")[0].value;
+                cartItemNames[i].parentElement.parentElement.getElementsByClassName("item-quantity")[0].getElementsByTagName("input")[0].value = parseInt(cartVal)+1;
+                return;
+            }
+        }
+        
+        rowContent=`<div class="global-item">
+        <div class="item">
+                <img src="${image}" width="auto" height="75px">
+                <span class="title-item">${title}</span>
+            </div>
+            <div class="item-price">${price}</div>
+            <div class="item-quantity">
+                <input type="number" value="1">
+                <button class="remove" type=button>Supprimer</button>
+            </div>
+            </div>`
+        row.innerHTML = rowContent;
+        cartRow.append(row);
+        cartRow.getElementsByClassName("remove")[0].addEventListener('click', removeItem)
+        cartRow.getElementsByClassName("item-quantity")[0].getElementsByTagName("input")[0].addEventListener('change', quantityChange)
+        updateTotal()
+        }
+    
+
+        
+    }
+    function updateInfoValues(event){
+            if(document.getElementsByName("nom").length !=0){
+                nom = document.getElementsByName("nom")[0].value
+            }else{
+                nom =''
+            }
+            if(document.getElementsByName("prenom").length !=0){
+                prenom = document.getElementsByName("prenom")[0].value
+            }else{
+                prenom =''
+            }
+            if(document.getElementsByName("tel").length !=0){
+                tel = document.getElementsByName("tel")[0].value
+            }else{
+                tel =''
+            }
+            if(document.getElementsByName("address").length !=0){
+                address = document.getElementsByName("address")[0].value
+            }else{
+                address =''
+            }
+            if(document.getElementsByName("city").length !=0){
+                city = document.getElementsByName("city")[0].value
+            }else{
+                city =''
+            }
+            console.log(nom, prenom, address)
+            
+        }
+    function dispInfo(){
+        transport = document.getElementsByName("transport")[0].value
+        if(transport == "delivery"){
+
+        no = document.createElement("form")
+        no.classList.add('info')
+        tx = `<input name="prenom" value='' placeholder="ex:Jules">
+<input name="nom" value='' placeholder="ex:César">
+<input name="tel" value='' placeholder="ex:06 06 06 06 06">
+
+<input name="adress" value='' placeholder="ex:18 rue du rubicond">
+<input name="city" value='' placeholder="ex:Bordeaux">
+`
+        no.innerHTML = tx
+        document.getElementsByClassName("information")[0].appendChild(no)
+
+    }else{
+        no = document.createElement("form")
+        no.classList.add('info')
+        tx=`<input name="prenom" value='' placeholder="ex:Jules">
+        <input name="nom" value='' placeholder="ex:César">
+        <input name="tel" value='' placeholder="ex:06 06 06 06 06">`
+        no.innerHTML=tx
+        document.getElementsByClassName("information")[0].appendChild(no)
+
+    }
+    document.getElementsByClassName("information")[0].addEventListener('mouseleave', updateInfoValues)
+    }
+    function purchased(event){
+       
+        if(document.getElementsByName("aknowledge")[0].checked == true){
+        
+        tota =''
+        ite = document.getElementsByClassName("item-quantity")
+        tit = document.getElementsByClassName("title-item")
+        console.log(ite.length, tit.length)
+        for(y=0; y<tit.length; y++){
+            tota += '{"pizzas" : "'+tit[y].innerText+'","nombre": "'+ite[y].getElementsByTagName("input")[0].value+'"},'
+        }
+        tota = tota.slice(0, -1)
+        tota = '{"commande":['+tota+']}'
+        console.log("content : ",tota)
+        total = parseFloat(document.getElementsByClassName("total")[0].innerHTML.replace('€', ''))*100
+        today = new Date();
+        if(total<700)
+        {alert("Vous n'avez rien commandé")}else{
+        var test = fetch('/pa', {
+        method: "POST",
+        redirect: 'follow',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        
+        //make sure to serialize your JSON body
+        body: JSON.stringify({
+            amount: total,
+            nom:nom,
+            prenom:prenom,
+            tel:tel,
+            address:address,
+            city:city,
+            delivery: transport,
+            content:tota,
+            date: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+' '+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds()
+
+        })
+        }
+
+        ).then(function(response){console.log("test ici :",response);  document.getElementsByName("prenom")[0].value='' 
+        document.getElementsByName("nom")[0].value=''
+        document.getElementsByName("tel")[0].value='' 
+        if(document.getElementsByName("address")[0]) {
+        document.getElementsByName("address")[0].value=''
+        document.getElementsByName("city")[0].value=''};if(response.redirected){window.location.href = response.url;}}
+        );
+      
+        /*cart = document.getElementsByClassName("cartRow")[0];
+        while(cart.hasChildNodes()){cart.removeChild(cart.firstChild)}
+        updateTotal()*/
+    }
+        }else{alert("Veuillez accepter les conditions de vente")}
+        document.getElementsByName("aknowledge")[0].checked = false;
+
+    }    
+
+    
+
+
+</script>
+<style>
+    .global-item{
+        margin-left:auto;
+        margin-right:auto;
+        display:grid;
+        grid-template-columns:auto auto auto;
+        align-items: center;
+    }
+    .item{
+        grid-column:1;
+    }
+    .item-price{
+        grid-column:2;
+    }
+    .item-quantity{
+
+        grid-column:3;
+    }
+    .hide{
+        display: none
+    }
+    .pi{
+        background: rgba(244, 231, 227, 0.7);
+        border-radius: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 70%;
+        text-align:center;
+        padding: 20px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-family:    Tahoma;
+        font-size:      30px;
+        font-weight:    normal;
+        overflow: auto;
+        word-break: break-word;
+    }
+    body{
+        margin: 0;
+        padding: 0;
+        position: relative;
+        width: 100%;
+    }
+    .fond{
+        background: center/contain url('https://www.cuisineetsentiments.com/images/planche-de-bois_2.jpg');
+        padding: 20px;
+    }
+    .addButton, .remove{
+        background-color: #E17138; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        font-size: 15px;
+        border-radius: 8px;
+        text-decoration: none;
+    }
+    h5{
+        color: #E17138;
+    }
+    .menu{
+        text-align: center;
+        padding: 20px;
+    }
+    .menu >*{
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-family:    Palatino, sans-serif;
+        font-size:      15px;
+        font-weight:    normal;
+    }
+    .purchase{
+        background-color: #E17138; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        font-size: 15px;
+        border-radius: 8px;
+        text-decoration: none;
+    }
+    .condition{
+        padding: 20px;
+        height: 550px;
+        margin-bottom: 50px;
+        position: relative;
+        grid-row: 1;
+    }
+    .total{
+        background: #D5DBDC;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        width:50px;
+    }
+    hr{
+        width: 80%;
+    }
+    .prev, .next {
+  cursor: pointer;
+  position: absolute;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 38px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  
+  top:30%;
+}
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+.pack{
+    display: grid;
+    grid-template-rows:60% auto ;
+}
+.footer{
+    grid-row: 2;
+}
+@media all and (display-mode: fullscreen) {
+  .fond {
+    margin: 0;
+  }
+  body{
+    padding: 0;
+    margin:0;
+
+  }
+}
+</style>
+
+

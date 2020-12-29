@@ -1,0 +1,169 @@
+{
+    "pizzas":[
+        {"name":"Marguerita",
+        "composition": "Tomate/mozza/origan",
+        "price":"7.70",
+        "image":"/static/image/Marguerita.jpg"
+        
+        },
+        {"name":"Isabella",
+            "composition": "Tomate/fromage/Jambon/origan",
+            "price":"7.70",
+            "image":"/static/image/Isabella.jpg"
+            
+            },
+        {"name":"Regina",
+            "composition": "Tomate/fromage/Jambon/champignon/mozza/origan",
+            "price":"8.80",
+            "image":"/static/image/Regina.jpg"
+            
+            },
+            {"name":"Spéciale",
+                "composition": "Tomate/fromage/Jambon/champignon/oeuf/crème fraîche/mozza/origan",
+                "price":"9.90",
+                "image":"/static/image/Spéciale.jpg"
+                
+                },
+            {"name":"Napolitaine",
+                "composition": "Tomate/fromage/anchois/olives/mozza/origan",
+                "price":"7.70",
+                "image":"/static/image/Napolitaine.jpg"
+                
+                },
+            {"name":"Sicilienne",
+                "composition": "Tomate/fromage/anchois/capres/mozza/origan",
+                "price":"7.70",
+                "image":"/static/image/Sicilienne.jpg"
+                
+                },
+            {"name":"Marina",
+                "composition": "Tomate/fromage/Thon/Poivron/crème fraîche/mozza/origan",
+                "price":"8.80",
+                "image":"/static/image/Marina.jpg"
+                
+                },
+            {"name":"Pescator",
+                "composition": "Tomate/fromage/Fruits de Mer/persillade /mozza/origan",
+                "price":"11.00",
+                "image":"/static/image/Pescator.jpg"
+                
+                },
+            {"name":"Saumon",
+                "composition": "Tomate/fromage/saumon/chèvre/crème fraîche/mozza/origan",
+                "price":"11.00",
+                "image":"/static/image/Saumon.jpg"
+                
+                },    
+            {"name":"Orientale-1",
+                "composition": "Tomate/fromage/Chorizo/Oeuf/Olives/mozza/origan",
+                "price":"8.80",
+                "image":"/static/image/Orientale-1.jpg"
+                
+                }, 
+            {"name":"Orientale-2",
+                "composition": "Tomate/fromage/Merguez/Oeuf/Olives/mozza/origan",
+                "price":"8.80",
+                "image":"/static/image/Orientale-2.jpg"
+                
+                },
+            {"name":"Chèvre",
+                "composition": "Tomate/fromage/Lardons/Chèvre/champignon/mozza/origan",
+                "price":"9.90",
+                "image":"/static/image/Chèvre.jpg"
+                
+                },
+            {"name":"Paysanne",
+                "composition": "Tomate/fromage/Lardons/champignon/Oeuf/mozza/origan",
+                "price":"9.90",
+                "image":"/static/image/Paysanne.jpg"
+                
+                },
+            {"name":"Campargnarde",
+                "composition": "Tomate/fromage/Oignons/Lardons/Chèvre/mozza/origan",
+                "price":"9.90",
+                "image":"/static/image/Campagnarde.jpg"
+                
+                },
+            {"name":"Gorgonzola",
+                "composition": "Tomate/fromage/Jambon/champignon/Gorgonzola/mozza/origan",
+                "price":"9.90",
+                "image":"/static/image/Gorgonzola.jpg"
+                
+                },
+            {"name":"Calzone",
+                "composition": "Tomate/fromage/Jambon/champignon/Oeuf/crème fraîche/mozza/origan",
+                "price":"9.90",
+                "image":"/static/image/Calzone.jpg"
+                
+                }, 
+            {"name":"Trois-fromages",
+                "composition": "Tomate/gorgonzola/parmesan/mozza/origan",
+                "price":"8.80",
+                "image":"/static/image/Trois-fromages.jpg"
+                
+                },
+            {"name":"Quatre-fromages",
+                "composition": "Tomate/gorgonzola/chèvre/parmesan/mozza/origan",
+                "price":"9.90",
+                "image":"/static/image/Quatre-fromages.jpg"
+                
+                },
+            {"name":"Roma",
+                "composition": "Tomate/fromage/Jambon/champignon/coeur d'artichaut/poivron/mozza/origan",
+                "price":"8.80",
+                "image":"/static/image/Roma.jpg"
+                
+                },
+            {"name":"Quatre-saisons",
+                "composition": "Tomate/fromage/Jambon/champignon/poivron/coeur d'artichaut/poivron/mozza/origan",
+                "price":"9.90",
+                "image":"/static/image/Quatre-saisons.jpg"
+                
+                },
+            {"name":"Végétarienne",
+                "composition": "Tomate/fromage/champignon/poivron/coeur d'artichaut/poivron/mozza/origan",
+                "price":"9.90",
+                "image":"/static/image/Végétarienne.jpg"
+                
+                },
+            {"name":"Vesuvio",
+                "composition": "Tomate/fromage/Bacon/Oeuf/mozza/origan",
+                "price":"8.80",
+                "image":"/static/image/Vesuvio.jpg"
+                
+                },
+            {"name":"Bolognaise",
+                "composition": "bolognaise/champignon/fromage/mozza/origan",
+                "price":"8.80",
+                "image":"/static/image/Bolognaise.jpg"
+                
+                },
+            {"name":"Antillaise",
+                "composition": "Tomate/fromage/Jambon/ananas/mozza/origan",
+                "price":"8.80",
+                "image":"/static/image/Antillaise.jpg"
+                
+                },
+            {"name":"Indienne",
+                "composition": "Crème/fromage/curry/poulet/anananas/mozza",
+                "price":"11.00",
+                "image":"/static/image/Indienne.jpg"
+                
+                },
+            {"name":"Magret",
+                "composition": "Crème/fromage/Magret/champignon/mozza",
+                "price":"11.00",
+                "image":"/static/image/Magret.jpg"
+                
+                }, 
+            {"name":"Buffalo",
+                "composition": "Tomate/fromage/Boeuf épicé/oignons/capres/Oeuf/mozza",
+                "price":"11.00",
+                "image":"/static/image/Buffalo.jpg"
+                
+                }                                                                                      
+                
+    
+        
+    ]
+}

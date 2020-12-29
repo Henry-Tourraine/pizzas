@@ -1,0 +1,59 @@
+<h1>hello Jérôme</h1>
+<h2>Voici tes commandes</h2>
+<% re.forEach(u =>{%>
+    <div class="pizza">
+    <div class="ide"><h2>•Commande <%=JSON.stringify(u.id)%></h2</div>
+    <div class="complete" style="display:none;"><%=JSON.stringify(u.complete)%></div>
+    <div class="commande"><% JSON.parse(u.content).commande.forEach(t =>{%>
+        <h2><%=JSON.stringify(t.nombre).split('"').join('')%> <%=JSON.stringify(t.pizzas).split('"').join('')%></h2>
+        
+        <%})%>
+        <button style="height:50px; width: 100px; background:#E17138;border-radius: 20px; border-style:none;color: white; ">Commande faite !</button>
+    </div>
+
+    </div>
+<%})%>
+
+<script>
+    
+      if(document.readyState == 'loading'){
+        document.addEventListener('DOMContentLoaded', start)
+    }else{start()}
+    function start(){
+    z = document.getElementsByClassName('complete')
+    for(r=0; r<z.length; r++){
+        console.log(z[r].innerHTML)
+        if(z[r].innerHTML == 1){
+            z[r].parentElement.getElementsByClassName("commande")[0].style.background =  "#c3f3c3";
+        }
+        
+    }
+    list =document.getElementsByTagName("button")
+    for(x=0; x<list.length; x++){
+        list[x].addEventListener('click', changeColor)
+    }
+    function changeColor(event){
+        event.target.parentElement.style.background = "#c3f3c3";
+        di = event.target.parentElement.parentElement.getElementsByClassName("ide")[0].innerHTML
+        console.log(event.target.parentElement.parentElement)
+    var update=fetch('/update', {
+        method: "POST",
+        redirect: 'follow',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        
+        //make sure to serialize your JSON body
+        body: JSON.stringify({
+            id: di,
+            complete:true
+            
+        })}).then(function(response){console.log("done")})
+       
+
+    }
+    today = new Date()
+    dat = today.getHours()
+    }
+</script>
